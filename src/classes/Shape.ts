@@ -22,6 +22,7 @@ abstract class Shape {
 
   abstract update(currentX: number, currentY: number): void;
   abstract draw(context: CanvasRenderingContext2D): void;
+  onComplete?(): void;
 }
 
 export default Shape;

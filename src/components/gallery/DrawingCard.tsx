@@ -1,4 +1,4 @@
-import type { SavedDrawing } from "../../utils/storage";
+import type { SavedDrawing } from "../../types";
 
 interface DrawingCardProps {
   drawing: SavedDrawing;

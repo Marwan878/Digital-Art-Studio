@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { SavedDrawing } from "../../utils/storage";
+import type { SavedDrawing } from "../../types";
 
 interface DrawingModalProps {
   drawing: SavedDrawing;

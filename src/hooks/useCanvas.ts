@@ -20,6 +20,7 @@ function reducer(state: TCanvasState, action: TAction): TCanvasState {
     }
 
     currentShape.isComplete = true;
+    currentShape.onComplete?.();
     return {
       shapes: [...state.shapes, currentShape],
       currentShape: null,

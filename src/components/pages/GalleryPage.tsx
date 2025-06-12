@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  getSavedDrawings,
-  deleteDrawing,
-  type SavedDrawing,
-} from "../../utils/storage";
+import type { SavedDrawing } from "../../types";
+import { getSavedDrawings, deleteDrawing } from "../../utils";
 import Layout from "../shared/Layout";
 import Header from "../shared/Header";
 import DrawingCard from "../gallery/DrawingCard";

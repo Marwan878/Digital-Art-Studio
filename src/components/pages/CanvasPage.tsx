@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { TOOLS } from "../../constants";
 import useCanvas from "../../hooks/useCanvas";
 import type { TToolName } from "../../types";
-import { saveDrawing } from "../../utils/storage";
+import { saveDrawing } from "../../utils";
 import Canvas from "../canvas/Canvas";
 import SaveDialog from "../canvas/SaveDialog";
 import Header from "../shared/Header";
@@ -15,7 +15,7 @@ const CanvasPage = () => {
 
   const [activeTool, setActiveTool] = useState<TToolName>(TOOLS[0].tool);
   const [lineWidth, setLineWidth] = useState(5);
-  const [selectedColor, setSelectedColor] = useState("#000");
+  const [selectedColor, setSelectedColor] = useState("#000000");
 
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [drawingName, setDrawingName] = useState("");

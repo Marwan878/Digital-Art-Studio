@@ -129,7 +129,7 @@ export default function Canvas({
   return (
     <div
       id="canvas-container"
-      className="bg-white rounded-2xl p-4 shadow-xl relative overflow-hidden"
+      className="bg-white rounded-2xl shadow-xl relative overflow-hidden"
     >
       <canvas
         ref={canvasRef}

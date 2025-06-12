@@ -24,3 +24,11 @@ export type TAction =
   | { type: "set_is_drawing"; payload: boolean }
   | { type: "set_shapes"; payload: Shape[] }
   | { type: "undone" };
+
+export type SavedDrawing = {
+  id: string;
+  name: string;
+  timestamp: number;
+  shapes: string;
+  thumbnail: string;
+};
