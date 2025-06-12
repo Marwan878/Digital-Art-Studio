@@ -1,54 +1,43 @@
-# React + TypeScript + Vite
+# 🎨 Digital Art Studio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Digital Art Studio** is a web application that enables users to create digital paintings directly in the browser. Built using TypeScript, HTML5 Canvas, and TailwindCSS, and powered by object-oriented design.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🖌️ **Multiple Drawing Tools**: Circles, Lines, Freehand, Rectangles, Sprays, Stamps, and Text
+- 💾 **Save, Edit & Delete Drawings**: Stored in Local Storage
+- ⚙️ **Technologies**:
+  - HTML5 Canvas
+  - OOP structure using classes for each shape/tool
+  - TypeScript
+  - React
+  - TailwindCSS
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clone the repository**  
+   `git clone https://github.com/Marwan878/Digital-Art-Studio.git && cd Digital-Art-Studio`
+2. **Install dependencies**  
+   `npm install`
+3. **Run the development server**  
+   `npm run dev`  
+   Then visit `http://localhost:3000` in your browser.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+## 🧠 Architecture
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- `classes/`: Shape classes (Rectangle, Circle, etc.)
+- `components/`: UI parts
+- `utils/`: Local storage helpers and logic
+- `App.tsx`: Main app entry
 
-```js
-// eslint.config.js
-import reacontext from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+## 📄 License
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reacontext,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reacontext.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+MIT
+
+## 🙌 Contributing
+
+Open an issue or submit a pull request to suggest or implement features!
+
+## Acknowledgments
+
+The UI has been made fully using AI. My main role was to apply the skills I learnt related to HTML5 Canvas.
