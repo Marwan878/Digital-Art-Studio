@@ -12,19 +12,6 @@ const initialState: TCanvasState = {
 
 function reducer(state: TCanvasState, action: TAction): TCanvasState {
   if (action.type === "cleared_canvas") {
-    // Cleanup all text inputs before clearing
-    state.shapes.forEach((shape) => {
-      if (shape.toolName === "text" && "cleanup" in shape) {
-        (shape as { cleanup: () => void }).cleanup();
-      }
-    });
-    // Also cleanup current shape if it's a text shape
-    if (
-      state.currentShape?.toolName === "text" &&
-      "cleanup" in state.currentShape
-    ) {
-      (state.currentShape as { cleanup: () => void }).cleanup();
-    }
     return initialState;
   } else if (action.type === "completed_shape") {
     const currentShape = action.payload;
@@ -33,23 +20,12 @@ function reducer(state: TCanvasState, action: TAction): TCanvasState {
     }
 
     currentShape.isComplete = true;
-
-    // Cleanup text input if it's a text shape
-    if (currentShape.toolName === "text" && "cleanup" in currentShape) {
-      (currentShape as { cleanup: () => void }).cleanup();
-    }
-
     return {
       shapes: [...state.shapes, currentShape],
       currentShape: null,
       isDrawing: false,
     };
   } else if (action.type === "undone") {
-    // Cleanup the last shape if it's a text shape
-    const lastShape = state.shapes[state.shapes.length - 1];
-    if (lastShape?.toolName === "text" && "cleanup" in lastShape) {
-      (lastShape as { cleanup: () => void }).cleanup();
-    }
     return {
       ...state,
       shapes: state.shapes.slice(0, -1),
