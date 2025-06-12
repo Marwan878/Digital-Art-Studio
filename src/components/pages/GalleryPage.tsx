@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { SavedDrawing } from "../../types";
-import { getSavedDrawings, deleteDrawing } from "../../utils";
-import Layout from "../shared/Layout";
-import Header from "../shared/Header";
+import { formatDate, getSavedDrawings } from "../../utils";
 import DrawingCard from "../gallery/DrawingCard";
-import EmptyState from "../gallery/EmptyState";
 import DrawingModal from "../gallery/DrawingModal";
+import EmptyState from "../gallery/EmptyState";
+import GalleryHeader from "../gallery/GalleryHeader";
+import Header from "../shared/Header";
+import Layout from "../shared/Layout";
 
 const GalleryPage = () => {
   const [drawings, setDrawings] = useState<SavedDrawing[]>([]);
@@ -17,24 +18,6 @@ const GalleryPage = () => {
   useEffect(() => {
     setDrawings(getSavedDrawings());
   }, []);
-
-  const handleDeleteDrawing = (id: string) => {
-    if (window.confirm("Are you sure you want to delete this drawing?")) {
-      deleteDrawing(id);
-      setDrawings(getSavedDrawings());
-      setSelectedDrawing(null);
-    }
-  };
-
-  const formatDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   const headerActions = (
     <>
@@ -59,16 +42,7 @@ const GalleryPage = () => {
 
       <main className="flex-1 p-6">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">Your Gallery</h1>
-            <p className="text-purple-100">
-              {drawings.length === 0
-                ? "No saved drawings yet. Start creating to build your collection!"
-                : `${drawings.length} saved drawing${
-                    drawings.length === 1 ? "" : "s"
-                  }`}
-            </p>
-          </div>
+          <GalleryHeader drawings={drawings} />
 
           {drawings.length === 0 ? (
             <EmptyState />
@@ -87,13 +61,13 @@ const GalleryPage = () => {
         </div>
       </main>
 
-      {/* Modal for viewing full-size drawing */}
       {selectedDrawing && (
         <DrawingModal
           drawing={selectedDrawing}
           onClose={() => setSelectedDrawing(null)}
-          onDelete={handleDeleteDrawing}
           formatDate={formatDate}
+          setDrawings={setDrawings}
+          setSelectedDrawing={setSelectedDrawing}
         />
       )}
     </Layout>

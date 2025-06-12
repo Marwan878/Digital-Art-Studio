@@ -1,21 +1,63 @@
+import {
+  useState,
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
+} from "react";
+import { saveDrawing } from "../../utils";
+import type { Shape } from "../../classes";
+
 interface SaveDialogProps {
   isOpen: boolean;
   drawingName: string;
-  isSaving: boolean;
+  canvasRef: RefObject<HTMLCanvasElement | null>;
+  shapes: Shape[];
+  urlPaintingId: string;
+  setShowSaveDialog: Dispatch<SetStateAction<boolean>>;
+  setDrawingName: Dispatch<SetStateAction<string>>;
   onClose: () => void;
-  onSave: () => void;
   onNameChange: (name: string) => void;
 }
 
 const SaveDialog = ({
   isOpen,
   drawingName,
-  isSaving,
+  canvasRef,
+  urlPaintingId,
+  shapes,
   onClose,
-  onSave,
   onNameChange,
+  setDrawingName,
+  setShowSaveDialog,
 }: SaveDialogProps) => {
-  if (!isOpen) return null;
+  const [isSaving, setIsSaving] = useState(false);
+
+  if (!isOpen || !canvasRef) return null;
+
+  const handleSaveDrawing = async () => {
+    if (!canvasRef.current || !drawingName.trim()) {
+      alert("Please enter a name for your drawing");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      await saveDrawing(
+        canvasRef.current,
+        shapes,
+        drawingName.trim(),
+        urlPaintingId || `drawing-${Date.now()}`
+      );
+      setShowSaveDialog(false);
+      setDrawingName("");
+      alert("Drawing saved successfully!");
+    } catch (error) {
+      console.error("Error saving drawing:", error);
+      alert("Failed to save drawing. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center p-4 z-50">
@@ -40,7 +82,7 @@ const SaveDialog = ({
             Cancel
           </button>
           <button
-            onClick={onSave}
+            onClick={handleSaveDrawing}
             disabled={isSaving || !drawingName.trim()}
             className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >

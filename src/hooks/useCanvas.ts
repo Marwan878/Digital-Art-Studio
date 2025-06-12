@@ -2,7 +2,7 @@ import { useEffect, useReducer } from "react";
 import { Shape } from "../classes";
 import type { TAction, TCanvasState } from "../types";
 import { convertJSONShapesToShapes, loadDrawing } from "../utils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const initialState: TCanvasState = {
   shapes: [],
@@ -51,8 +51,11 @@ function reducer(state: TCanvasState, action: TAction): TCanvasState {
   }
 }
 
-const useCanvas = (urlPaintingId: string) => {
+const useCanvas = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const [searchParams] = useSearchParams();
+  const urlPaintingId = searchParams.get("load");
 
   const navigate = useNavigate();
 
@@ -76,6 +79,7 @@ const useCanvas = (urlPaintingId: string) => {
     shapes: state.shapes,
     currentShape: state.currentShape,
     isDrawing: state.isDrawing,
+    urlPaintingId,
     setCurrentShape: (currentShape: Shape | null) =>
       dispatch({ type: "set_current_shape", payload: currentShape }),
     setIsDrawing: (isDrawing: boolean) =>

@@ -1,19 +1,30 @@
+import type { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import type { SavedDrawing } from "../../types";
+import { deleteDrawing, getSavedDrawings } from "../../utils";
 
 interface DrawingModalProps {
   drawing: SavedDrawing;
   onClose: () => void;
-  onDelete: (id: string) => void;
   formatDate: (timestamp: number) => string;
+  setDrawings: Dispatch<SetStateAction<SavedDrawing[]>>;
+  setSelectedDrawing: Dispatch<SetStateAction<SavedDrawing | null>>;
 }
 
 const DrawingModal = ({
   drawing,
   onClose,
-  onDelete,
   formatDate,
+  setDrawings,
+  setSelectedDrawing,
 }: DrawingModalProps) => {
+  const handleDeleteDrawing = (id: string) => {
+    if (window.confirm("Are you sure you want to delete this drawing?")) {
+      deleteDrawing(id);
+      setDrawings(getSavedDrawings());
+      setSelectedDrawing(null);
+    }
+  };
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur flex items-center justify-center p-4 z-50">
       <div className="bg-white/15 backdrop-blur rounded-xl border border-white/20 max-w-4xl max-h-[90vh] overflow-hidden shadow-2xl">
@@ -32,7 +43,7 @@ const DrawingModal = ({
               Edit
             </Link>
             <button
-              onClick={() => onDelete(drawing.id)}
+              onClick={() => handleDeleteDrawing(drawing.id)}
               className="bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition-colors"
             >
               Delete

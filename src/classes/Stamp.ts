@@ -18,7 +18,7 @@ class Stamp extends Shape {
     Stamp.upcomingStampIndex++;
   }
 
-  update(currentX: number, currentY: number): void {
+  update(): void {
     return;
   }
 

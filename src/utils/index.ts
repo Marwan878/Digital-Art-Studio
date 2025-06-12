@@ -4,3 +4,4 @@ export { default as deleteDrawing } from "./deleteDrawing";
 export { default as getSavedDrawings } from "./getSavedDrawings";
 export { default as loadDrawing } from "./loadDrawing";
 export { default as saveDrawing } from "./saveDrawing";
+export { default as formatDate } from "./formatDate";

@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TOOLS } from "../../constants";
 import useCanvas from "../../hooks/useCanvas";
 import type { TToolName } from "../../types";
-import { saveDrawing } from "../../utils";
 import Canvas from "../canvas/Canvas";
+import SaveButton from "../canvas/SaveButton";
 import SaveDialog from "../canvas/SaveDialog";
 import Header from "../shared/Header";
 import Layout from "../shared/Layout";
@@ -19,59 +19,16 @@ const CanvasPage = () => {
 
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [drawingName, setDrawingName] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
 
-  const [searchParams] = useSearchParams();
-  const urlPaintingId = searchParams.get("load");
-
-  const canvasData = useCanvas(urlPaintingId ?? "");
-
-  const handleSaveDrawing = async () => {
-    if (!canvasRef.current || !drawingName.trim()) {
-      alert("Please enter a name for your drawing");
-      return;
-    }
-
-    setIsSaving(true);
-    try {
-      await saveDrawing(
-        canvasRef.current,
-        canvasData.shapes,
-        drawingName.trim(),
-        urlPaintingId ?? `drawing-${Date.now()}`
-      );
-      setShowSaveDialog(false);
-      setDrawingName("");
-      alert("Drawing saved successfully!");
-    } catch (error) {
-      console.error("Error saving drawing:", error);
-      alert("Failed to save drawing. Please try again.");
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const openSaveDialog = () => {
-    if (!drawingName) {
-      const timestamp = new Date().toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      setDrawingName(`Drawing ${timestamp}`);
-    }
-    setShowSaveDialog(true);
-  };
+  const canvasData = useCanvas();
 
   const headerActions = (
     <>
-      <button
-        onClick={openSaveDialog}
-        className="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors cursor-pointer"
-      >
-        💾 Save
-      </button>
+      <SaveButton
+        drawingName={drawingName}
+        setDrawingName={setDrawingName}
+        setShowSaveDialog={setShowSaveDialog}
+      />
       <Link
         to="/gallery"
         className="bg-white/20 backdrop-blur text-white px-4 py-2 rounded-lg font-medium border border-white/30 hover:bg-white/30 transition-all duration-200"
@@ -114,12 +71,15 @@ const CanvasPage = () => {
       </main>
 
       <SaveDialog
+        canvasRef={canvasRef}
+        shapes={canvasData.shapes}
+        urlPaintingId={canvasData.urlPaintingId ?? ""}
+        setShowSaveDialog={setShowSaveDialog}
+        setDrawingName={setDrawingName}
         isOpen={showSaveDialog}
         drawingName={drawingName}
-        isSaving={isSaving}
-        onClose={() => setShowSaveDialog(false)}
-        onSave={handleSaveDrawing}
         onNameChange={setDrawingName}
+        onClose={() => setShowSaveDialog(false)}
       />
     </Layout>
   );
