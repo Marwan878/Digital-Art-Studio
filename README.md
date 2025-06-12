@@ -30,10 +30,6 @@
 - `utils/`: Local storage helpers and logic
 - `App.tsx`: Main app entry
 
-## 📄 License
-
-MIT
-
 ## 🙌 Contributing
 
 Open an issue or submit a pull request to suggest or implement features!
