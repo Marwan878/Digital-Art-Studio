@@ -23,6 +23,12 @@
    `npm run dev`  
    Then visit `http://localhost:3000` in your browser.
 
+## 📸 Screenshots
+
+![Hero section](/public/hero.png)
+![Canvas page](/public/canvas.png)
+![Gallery page](/public/gallery.png)
+
 ## 🧠 Architecture
 
 - `classes/`: Shape classes (Rectangle, Circle, etc.)
